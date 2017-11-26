@@ -40,6 +40,14 @@ while iter < maxIter
     disp(['Iter ',num2str(iter),'=',num2str(obj)]);
 	iter = iter + 1;
 end
+% Update B
+B = zeros(size(B));
+for i = 1:k
+    V_aug = repmat(V(:,i),1,nSmp);
+    Dis = sum((V_aug - X).*(V_aug - X),1);
+    Near_Idx = find(Dis == min(Dis));
+    B(i,Near_Idx(1)) = 1;
+end
 SelIdx = zeros(k,1);
 for i = 1:k
     SelIdx(i) = find(B(i,:)==1);
