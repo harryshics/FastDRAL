@@ -25,17 +25,23 @@ while iter < maxIter
 	for i = 1:k
 		V_aug = repmat(V(:,i),1,nSmp);
 		Dis = sum((V_aug - X).*(V_aug - X),1);
-		Near_Idx = find(Dis = min(Dis));
-		B(i,Near_Idx) = 1;
+		Near_Idx = find(Dis == min(Dis));
+		B(i,Near_Idx(1)) = 1;
 	end
 
 	% Update A
-	A = (V'*V + alpha*eye(k))^{-1}*V'*X;
+	A = (V'*V + alpha*eye(k))^(-1)*V'*X;
 
 	% Update V
-	V = X*(A' + beta*B')*(A*A' + beta*eye(k))^{-1}
+	V = X*(A' + beta*B')*(A*A' + beta*eye(k))^(-1);
 
+    obj = GetObj(X, V, A, B, alpha, beta);
+    disp(['Iter ',num2str(iter),'=',num2str(obj)]);
 	iter = iter + 1;
+end
+SelIdx = zeros(k,1);
+for i = 1:k
+    SelIdx(i) = find(B(i,:)==1);
 end
 end
 
@@ -45,5 +51,5 @@ obj_1 = sum(sum(term_1.*term_1));
 obj_2 = sum(sum(A.*A));
 term_3 = V - X*B';
 obj_3 = sum(sum(term_3.*term_3));
-obj = obj_1 + alpha*obj_2 + beta*obj_3
+obj = obj_1 + alpha*obj_2 + beta*obj_3;
 end
