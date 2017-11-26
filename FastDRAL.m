@@ -13,11 +13,12 @@ function SelIdx = FastDRAL(X, k, alpha, beta, maxIter)
 %
 
 [nFea, nSmp] = size(X);
-V = rand(nFea, k); % V: d by k virtual samples
+V = rand(nFea, k)*255; % V: d by k virtual samples
 A = rand(k, nSmp); % A: k by n reconstruction coefficients
 B = zeros(k, nSmp); % B: nearest neighbour assignment matrix
 
 iter = 0;
+
 
 while iter < maxIter
 	% Update B
