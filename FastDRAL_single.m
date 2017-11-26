@@ -1,8 +1,6 @@
-function f = DFIS_local_fast_single_server(dataset,nSelInsArr,alpha_candi,beta_candi)
+function f = FastDRAL_single(dataset,nSelInsArr,alpha_candi,beta_candi)
 %%
 % dataset : the path of dataset
-% nSelFeaArr : an array which stores the numbers of selected features, e.g.,
-% [10,20,30]
 % nSelInsArr : an array which stores the numbers of selected instances, e.g.,
 % [10,20,30]
 
@@ -12,49 +10,44 @@ function f = DFIS_local_fast_single_server(dataset,nSelInsArr,alpha_candi,beta_c
 nClass = length(unique(gnd));
 disp(['Dataset:', dataset, ' | nSmp:',num2str(nSmp), ' | nFea:', num2str(nFea)]);
 %% ACC
-ACC_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-ACC_knn_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-ACC_te = zeros(length(nSelInsArr),length(nSelFeaArr));
-ACC_knn_te = zeros(length(nSelInsArr),length(nSelFeaArr));
+ACC_val = zeros(length(nSelInsArr),1);
+ACC_knn_val = zeros(length(nSelInsArr),1);
+ACC_te = zeros(length(nSelInsArr),1);
+ACC_knn_te = zeros(length(nSelInsArr),1);
 %% ROC
-ROC_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-ROC_knn_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-ROC_te = zeros(length(nSelInsArr),length(nSelFeaArr));
-ROC_knn_te = zeros(length(nSelInsArr),length(nSelFeaArr));
+ROC_val = zeros(length(nSelInsArr),1);
+ROC_knn_val = zeros(length(nSelInsArr),1);
+ROC_te = zeros(length(nSelInsArr),1);
+ROC_knn_te = zeros(length(nSelInsArr),1);
 
 %% F_macro
-F_macro_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-F_macro_knn_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-F_macro_te = zeros(length(nSelInsArr),length(nSelFeaArr));
-F_macro_knn_te = zeros(length(nSelInsArr),length(nSelFeaArr));
+F_macro_val = zeros(length(nSelInsArr),1);
+F_macro_knn_val = zeros(length(nSelInsArr),1);
+F_macro_te = zeros(length(nSelInsArr),1);
+F_macro_knn_te = zeros(length(nSelInsArr),1);
 
 %% F_micro
-F_micro_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-F_micro_knn_val = zeros(length(nSelInsArr),length(nSelFeaArr));
-F_micro_te = zeros(length(nSelInsArr),length(nSelFeaArr));
-F_micro_knn_te = zeros(length(nSelInsArr),length(nSelFeaArr));
+F_micro_val = zeros(length(nSelInsArr),1);
+F_micro_knn_val = zeros(length(nSelInsArr),1);
+F_micro_te = zeros(length(nSelInsArr),1);
+F_micro_knn_te = zeros(length(nSelInsArr),1);
 
 %% prepare parameters
-paras_cnt = length(alpha_candi)*length(beta_candi)*length(gamma_candi);
+paras_cnt = length(alpha_candi)*length(beta_candi);
 paras = cell(paras_cnt,1);
 para_idx = 1;
 for alpha = alpha_candi
     for beta = beta_candi
-        for gamma = gamma_candi
-            paras{para_idx}.alpha = alpha;
-            paras{para_idx}.beta = beta;
-            paras{para_idx}.gamma = gamma;
-            para_idx = para_idx + 1;
-        end
+        paras{para_idx}.alpha = alpha;
+        paras{para_idx}.beta = beta;
+        para_idx = para_idx + 1;
     end
 end
 
 t_fs = zeros(length(paras),1);
-%% dual selection by DFIS_diverse
 parfor para_idx = 1:length(paras)
     alpha = paras{para_idx}.alpha;
     beta = paras{para_idx}.beta;
-    gamma = paras{para_idx}.gamma;
     t_start = clock;
     [~,A,U] = DFIS_local_fast(fea',alpha,beta,gamma,6,20,k,c);
     [~,FeaIdx] = sort(sum(A.*A,2),'descend');
