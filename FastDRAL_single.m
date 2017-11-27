@@ -122,6 +122,6 @@ for iSelIns = 1:length(nSelInsArr)
 end
 
 result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL','_best','.mat');
-save(result_path,'nSelFeaArr','nSelInsArr','ACC_te','ACC_knn_te','ROC_te','ROC_knn_te','F_macro_te','F_macro_knn_te','F_micro_te','F_micro_knn_te');
+save(result_path,'nSelInsArr','ACC_te','ACC_knn_te','ROC_te','ROC_knn_te','F_macro_te','F_macro_knn_te','F_micro_te','F_micro_knn_te');
 f = 1;
 end
