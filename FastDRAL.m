@@ -1,4 +1,4 @@
-function SelIdx = FastDRAL(X, k, alpha, beta, maxIter)
+function SelIdx = FastDRAL(X, k, alpha, beta, maxIter, Verbose)
 %% FastDRAL
 % Written by Lei Shi (harryshi.cs@gmail.com)
 % Version 1, Nov 26th, 2017
@@ -37,7 +37,9 @@ while iter < maxIter
 	V = X*(A' + beta*B')*(A*A' + beta*eye(k))^(-1);
 
     obj = GetObj(X, V, A, B, alpha, beta);
-    disp(['Iter ',num2str(iter),'=',num2str(obj)]);
+    if Verbose == 1
+        disp(['Iter ',num2str(iter),'=',num2str(obj)]);
+    end
 	iter = iter + 1;
 end
 % Update B
