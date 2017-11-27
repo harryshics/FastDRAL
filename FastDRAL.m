@@ -1,4 +1,4 @@
-function SelIdx = FastDRAL(X, k, alpha, beta, maxIter, Verbose)
+function SelIdx = FastDRAL(X, k, alpha, beta, maxIter, Verbose, init)
 %% FastDRAL
 % Written by Lei Shi (harryshi.cs@gmail.com)
 % Version 1, Nov 26th, 2017
@@ -13,13 +13,16 @@ function SelIdx = FastDRAL(X, k, alpha, beta, maxIter, Verbose)
 %
 
 [nFea, nSmp] = size(X);
-V = rand(nFea, k)*255; % V: d by k virtual samples
+V = rand(nFea, k); % V: d by k virtual samples
 A = rand(k, nSmp); % A: k by n reconstruction coefficients
 B = zeros(k, nSmp); % B: nearest neighbour assignment matrix
 
+if init == 1
+    [~,center,~,~] = litekmeans(X', k);
+    V = center';
+end
+
 iter = 0;
-
-
 while iter < maxIter
 	% Update B
 	B = zeros(size(B));

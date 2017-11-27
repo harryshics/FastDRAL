@@ -55,7 +55,7 @@ for iSelIns = 1:length(nSelInsArr)
         alpha = paras{para_idx}.alpha;
         beta = paras{para_idx}.beta;
         t_start = clock;
-        SelIdx = FastDRAL(fea', k, alpha, beta, maxIter, 2);
+        SelIdx = FastDRAL(fea', k, alpha, beta, maxIter, 2, 1);
         t_end = clock;
         t_fs(para_idx) = etime(t_end,t_start);
         result{para_idx}.InsIdx = SelIdx;
@@ -121,7 +121,7 @@ for iSelIns = 1:length(nSelInsArr)
     disp(['Selecting ',num2str(k),' samples, ACC=',num2str(ACC_te(iSelIns)),', ROC=',num2str(ROC_te(iSelIns))]);
 end
 
-result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL','_best','.mat');
+result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL_kInit','_best','.mat');
 save(result_path,'nSelInsArr','ACC_te','ACC_knn_te','ROC_te','ROC_knn_te','F_macro_te','F_macro_knn_te','F_micro_te','F_micro_knn_te');
 f = 1;
 end
