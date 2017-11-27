@@ -5,7 +5,7 @@ function f = FastDRAL_single(dataset,nSelInsArr,alpha_candi,beta_candi)
 % [10,20,30]
 
 %% setup
-maxIter = 50;
+maxIter = 20;
 [fea,gnd] = loadData(dataset,-1);
 [nSmp,nFea] = size(fea);
 nClass = length(unique(gnd));
@@ -118,6 +118,7 @@ for iSelIns = 1:length(nSelInsArr)
             F_micro_knn_te(iSelIns) = performance_knn.F_micro_test;
         end
     end
+    disp(['Selecting ',num2str(k),' samples, ACC=',num2str(ACC_te(iSelIns)),', ROC=',num2str(ROC_te(iSelIns))]);
 end
 
 result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL','_best','.mat');
