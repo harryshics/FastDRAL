@@ -40,6 +40,9 @@ while iter < maxIter
     if Verbose == 1
         disp(['Iter ',num2str(iter),'=',num2str(obj)]);
     end
+    if Verbose == 2
+        fprintf('.');
+    end
 	iter = iter + 1;
 end
 % Update B

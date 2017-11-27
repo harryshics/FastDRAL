@@ -48,13 +48,14 @@ end
 for iSelIns = 1:length(nSelInsArr)
     k = nSelInsArr(iSelIns);
     disp(['************************************']);
-    disp(['Selecting ', numstr(k), ' samples...']);
+    disp(['Selecting ', num2str(k), ' samples...']);
     t_fs = zeros(length(paras),1);
-    parfor para_idx = 1:length(paras)
+    result = cell(length(paras),1);
+    for para_idx = 1:length(paras)
         alpha = paras{para_idx}.alpha;
         beta = paras{para_idx}.beta;
         t_start = clock;
-        SelIdx = FastDRAL(fea', k, alpha, beta, maxIter, 0);
+        SelIdx = FastDRAL(fea', k, alpha, beta, maxIter, 2);
         t_end = clock;
         t_fs(para_idx) = etime(t_end,t_start);
         result{para_idx}.InsIdx = SelIdx;
