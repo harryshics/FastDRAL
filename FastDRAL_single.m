@@ -33,6 +33,9 @@ F_micro_knn_val = zeros(length(nSelInsArr),1);
 F_micro_te = zeros(length(nSelInsArr),1);
 F_micro_knn_te = zeros(length(nSelInsArr),1);
 
+%% running time
+running_time = zeros(length(nSelInsArr),1);
+
 %% prepare parameters
 paras_cnt = length(alpha_candi)*length(beta_candi);
 paras = cell(paras_cnt,1);
@@ -65,6 +68,7 @@ for iSelIns = 1:length(nSelInsArr)
         disp(['alpha=',num2str(alpha),',beta=',num2str(beta),',time=',num2str(t_fs(para_idx))]);
     end
     disp(['Selecting ',num2str(k),' samples, time cost: ',num2str(mean(t_fs))]);
+    running_time(iSelIns) = mean(t_fs);
 
     disp(['Local evaluation...']);
     %% local evaluation
@@ -123,6 +127,12 @@ for iSelIns = 1:length(nSelInsArr)
     end
     disp(['Selecting ',num2str(k),' samples, ACC=',num2str(ACC_te(iSelIns)),', ROC=',num2str(ROC_te(iSelIns))]);
 end
+
+result_writer('FastDRAL', dataset, 'Time', running_time);
+result_writer('FastDRAL', dataset, 'ACC_te', ACC_te);
+result_writer('FastDRAL', dataset, 'ROC_te', ROC_te);
+result_writer('FastDRAL', dataset, 'F_macro_te', F_macro_te);
+result_writer('FastDRAL', dataset, 'F_micro_te', F_micro_te);
 
 result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL_kInit','_best','.mat');
 save(result_path,'nSelInsArr','ACC_te','ACC_knn_te','ROC_te','ROC_knn_te','F_macro_te','F_macro_knn_te','F_micro_te','F_micro_knn_te');
