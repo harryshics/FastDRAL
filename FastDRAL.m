@@ -43,6 +43,16 @@ if init == 1
     fprintf('Done! exe time: %f\n',t_cost);
 end
 
+if init == 2
+    fprintf('Init by MaxVol....');
+    t_start = clock;
+    col_idxs = MaxVol(X, k);
+    V = X(:,col_idxs);
+    t_end = clock;
+    t_cost = etime(t_end,t_start);
+    fprintf('Done! exe time: %f\n',t_cost);
+end
+
 X_squre = sum(X.*X,1);
 iter = 0;
 while iter < maxIter
