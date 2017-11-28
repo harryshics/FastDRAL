@@ -133,6 +133,10 @@ result_writer('FastDRAL', dataset, 'ACC_te', ACC_te);
 result_writer('FastDRAL', dataset, 'ROC_te', ROC_te);
 result_writer('FastDRAL', dataset, 'F_macro_te', F_macro_te);
 result_writer('FastDRAL', dataset, 'F_micro_te', F_micro_te);
+result_writer('FastDRAL', dataset, 'ACC_knn_te', ACC_knn_te);
+result_writer('FastDRAL', dataset, 'ROC_knn_te', ROC_knn_te);
+result_writer('FastDRAL', dataset, 'F_macro_knn_te', F_macro_knn_te);
+result_writer('FastDRAL', dataset, 'F_micro_knn_te', F_micro_knn_te);
 
 result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL_kInit','_best','.mat');
 save(result_path,'nSelInsArr','ACC_te','ACC_knn_te','ROC_te','ROC_knn_te','F_macro_te','F_macro_knn_te','F_micro_te','F_micro_knn_te');
