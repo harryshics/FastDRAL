@@ -21,9 +21,16 @@ B = zeros(k, nSmp); % B: nearest neighbour assignment matrix
 if nargin < 6
     init = 0;
     verbose = 1;
+    reducedDim = -1;
 else
     init = options.init;
     verbose = options.verbose;
+    reducedDim = options.reducedDim;
+end
+
+if reduceDim > 0
+    X = GraphEmbedding(X', reducedDim);
+    X = X';
 end
 
 if init == 1
