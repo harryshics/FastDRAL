@@ -33,7 +33,7 @@ if init == 1
     V = center';
     t_end = clock;
     t_cost = etime(t_end,t_start);
-    fprintf('Done! exe time: %f\n',t_cost);
+    fprintf('Done! \n');
 end
 
 X_squre = sum(X.*X,1);
