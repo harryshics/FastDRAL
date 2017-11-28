@@ -27,8 +27,10 @@ else
 end
 
 if init == 1
+    fprintf('Init by kmeans....');
     [~,center,~,~] = litekmeans(X', k);
     V = center';
+    fprintf('Done!\n');
 end
 
 X_squre = sum(X.*X,1);
