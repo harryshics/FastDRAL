@@ -60,6 +60,7 @@ for iSelIns = 1:length(nSelInsArr)
         options = [];
         options.init = 1;
         options.verbose = 2;
+        options.reducedDim = 0;
         t_start = clock;
         SelIdx = FastDRAL(fea', k, alpha, beta, maxIter, options);
         t_end = clock;
@@ -128,17 +129,18 @@ for iSelIns = 1:length(nSelInsArr)
     disp(['Selecting ',num2str(k),' samples, ACC=',num2str(ACC_te(iSelIns)),', ROC=',num2str(ROC_te(iSelIns))]);
 end
 
-result_writer('FastDRAL', dataset, 'Time', running_time);
-result_writer('FastDRAL', dataset, 'ACC_te', ACC_te);
-result_writer('FastDRAL', dataset, 'ROC_te', ROC_te);
-result_writer('FastDRAL', dataset, 'F_macro_te', F_macro_te);
-result_writer('FastDRAL', dataset, 'F_micro_te', F_micro_te);
-result_writer('FastDRAL', dataset, 'ACC_knn_te', ACC_knn_te);
-result_writer('FastDRAL', dataset, 'ROC_knn_te', ROC_knn_te);
-result_writer('FastDRAL', dataset, 'F_macro_knn_te', F_macro_knn_te);
-result_writer('FastDRAL', dataset, 'F_micro_knn_te', F_micro_knn_te);
+Method_name = 'FastDRAL_kmInit';
+result_writer(Method_name, dataset, 'Time', running_time);
+result_writer(Method_name, dataset, 'ACC_te', ACC_te);
+result_writer(Method_name, dataset, 'ROC_te', ROC_te);
+result_writer(Method_name, dataset, 'F_macro_te', F_macro_te);
+result_writer(Method_name, dataset, 'F_micro_te', F_micro_te);
+result_writer(Method_name, dataset, 'ACC_knn_te', ACC_knn_te);
+result_writer(Method_name, dataset, 'ROC_knn_te', ROC_knn_te);
+result_writer(Method_name, dataset, 'F_macro_knn_te', F_macro_knn_te);
+result_writer(Method_name, dataset, 'F_micro_knn_te', F_micro_knn_te);
 
-result_path = strcat('../plot_results/','acc_',dataset,'_FastDRAL_kInit','_best','.mat');
+result_path = strcat('../plot_results/','acc_',dataset,'_',Method_name,'_best','.mat');
 save(result_path,'nSelInsArr','ACC_te','ACC_knn_te','ROC_te','ROC_knn_te','F_macro_te','F_macro_knn_te','F_micro_te','F_micro_knn_te');
 f = 1;
 end
