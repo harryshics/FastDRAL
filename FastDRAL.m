@@ -29,8 +29,10 @@ else
 end
 
 if reducedDim > 0
+    fprintf('Reduce dim to %d ...',reducedDim);
     X = GraphEmbedding(X', reducedDim);
     X = X';
+    fprintf('Done!\n');
 end
 
 if init == 1
