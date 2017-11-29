@@ -11,7 +11,7 @@ function col_idxs = MaxVol(X,k)
 % Version 2 on Nov 28, 2017
 
 %% Compute the rank-k svd approximation to X
-[~,V] = rk_svds(X,k);
+[~,V] = rk_svd(X,k);
 
 %% Column selection by MaxVol
 flag = 1;
