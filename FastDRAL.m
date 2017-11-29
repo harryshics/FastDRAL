@@ -28,7 +28,7 @@ else
     reducedDim = options.reducedDim;
 end
 
-if reduceDim > 0
+if reducedDim > 0
     X = GraphEmbedding(X', reducedDim);
     X = X';
 end
