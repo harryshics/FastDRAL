@@ -58,7 +58,7 @@ for iSelIns = 1:length(nSelInsArr)
         alpha = paras{para_idx}.alpha;
         beta = paras{para_idx}.beta;
         options = [];
-        options.init = 1;
+        options.init = 2;
         options.verbose = 2;
         options.reducedDim = 0;
         t_start = clock;
@@ -129,7 +129,7 @@ for iSelIns = 1:length(nSelInsArr)
     disp(['Selecting ',num2str(k),' samples, ACC=',num2str(ACC_te(iSelIns)),', ROC=',num2str(ROC_te(iSelIns))]);
 end
 
-Method_name = 'FastDRAL_kmInit'; %kmInit, mvInit, kmInit_embedding
+Method_name = 'FastDRAL_mvInit'; %kmInit, mvInit, kmInit_embedding
 result_writer(Method_name, dataset, 'Time', running_time);
 result_writer(Method_name, dataset, 'ACC_te', ACC_te);
 result_writer(Method_name, dataset, 'ROC_te', ROC_te);
