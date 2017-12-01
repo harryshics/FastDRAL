@@ -2,7 +2,7 @@ addpath('../lib/code/');
 addpath('../lib/data/');
 
 alpha_candi = 10.^(-3:1:3);
-beta_candi = 10.^(3);
+beta_candi = 10.^(-3:1:3);
 nSelInsArr = (20:20:200);
 
 dataset = 'MNIST_10000n_784d_10c';
