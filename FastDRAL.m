@@ -35,6 +35,16 @@ if reducedDim > 0
     fprintf('Done!\n');
 end
 
+if init == 0
+    fprintf('Init randomly...');
+    t_start = clock;
+    rand_idx = randperm(nSmp);
+    V = X(:,rand_idx(1:k));
+    t_end = clock;
+    t_cost = etime(t_end,t_start);
+    fprintf('Done! exe time: %f\n',t_cost);
+end
+
 if init == 1
     fprintf('Init by kmeans....');
     t_start = clock;
