@@ -1,4 +1,4 @@
-function [SelIdx, X] = FastDRAL(X, k, alpha, beta, maxIter, options)
+function [SelIdx, X] = FastDRAL(X, k, alpha, beta, maxIter, options, gnd)
 %% FastDRAL
 % Written by Lei Shi (harryshi.cs@gmail.com)
 % Version 1, Nov 26th, 2017
@@ -99,7 +99,14 @@ while iter < maxIter
     end
     if verbose == 2
         if mod(iter,20) == 0
-            fprintf('.');
+            VVV = sum(sum(V.*V));
+            disp([num2str(VVV)]);
+            SelIdx = zeros(k,1);
+            for i = 1:k
+                SelIdx(i) = find(B(i,:)==1);
+            end
+            performance = Fast_Eval_Classification(X', gnd, SelIdx);
+            disp(['FastDRAL, ACC=',num2str(performance.acc),',ROC=',num2str(performance.roc)]);
         end
     end
 	iter = iter + 1;
