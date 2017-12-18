@@ -1,4 +1,4 @@
-function SelIdx = FastDRAL(X, k, alpha, beta, maxIter, options)
+function [SelIdx, X] = FastDRAL(X, k, alpha, beta, maxIter, options)
 %% FastDRAL
 % Written by Lei Shi (harryshi.cs@gmail.com)
 % Version 1, Nov 26th, 2017
@@ -35,14 +35,19 @@ if reducedDim > 0
     fprintf('Done!\n');
 end
 
+if init == -1
+    pre_idx = options.pre_idx;
+    V = X(:, pre_idx);
+end
+
 if init == 0
-    fprintf('Init randomly...');
+    %fprintf('Init randomly...');
     t_start = clock;
     rand_idx = randperm(nSmp);
     V = X(:,rand_idx(1:k));
     t_end = clock;
     t_cost = etime(t_end,t_start);
-    fprintf('Done! exe time: %f\n',t_cost);
+    %fprintf('Done! exe time: %f\n',t_cost);
 end
 
 if init == 1
@@ -93,7 +98,9 @@ while iter < maxIter
         disp(['Iter ',num2str(iter),'=',num2str(obj)]);
     end
     if verbose == 2
-        fprintf('.');
+        if mod(iter,20) == 0
+            fprintf('.');
+        end
     end
 	iter = iter + 1;
 end

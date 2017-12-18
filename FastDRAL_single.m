@@ -5,7 +5,7 @@ function f = FastDRAL_single(dataset,nSelInsArr,alpha_candi,beta_candi)
 % [10,20,30]
 
 %% setup
-maxIter = 20;
+maxIter = 200;
 [fea,gnd] = loadData(dataset,-1);
 [nSmp,nFea] = size(fea);
 nClass = length(unique(gnd));
@@ -50,8 +50,8 @@ end
 
 for iSelIns = 1:length(nSelInsArr)
     k = nSelInsArr(iSelIns);
-    disp(['************************************']);
-    disp(['Selecting ', num2str(k), ' samples...']);
+    %disp(['************************************']);
+    %disp(['Selecting ', num2str(k), ' samples...']);
     t_fs = zeros(length(paras),1);
     result = cell(length(paras),1);
     for para_idx = 1:length(paras)
@@ -66,12 +66,12 @@ for iSelIns = 1:length(nSelInsArr)
         t_end = clock;
         t_fs(para_idx) = etime(t_end,t_start);
         result{para_idx}.InsIdx = SelIdx;
-        disp(['alpha=',num2str(alpha),',beta=',num2str(beta),',time=',num2str(t_fs(para_idx))]);
+        %disp(['alpha=',num2str(alpha),',beta=',num2str(beta),',time=',num2str(t_fs(para_idx))]);
     end
-    disp(['Selecting ',num2str(k),' samples, time cost: ',num2str(mean(t_fs))]);
+    %disp(['Selecting ',num2str(k),' samples, time cost: ',num2str(mean(t_fs))]);
     running_time(iSelIns) = mean(t_fs);
 
-    disp(['Local evaluation...']);
+    %disp(['Local evaluation...']);
     %% local evaluation
     for para_idx = 1:length(paras)
         InsIdx = result{para_idx}.InsIdx;
@@ -125,11 +125,12 @@ for iSelIns = 1:length(nSelInsArr)
             F_micro_knn_val(iSelIns) = performance_knn.F_micro_val;
             F_micro_knn_te(iSelIns) = performance_knn.F_micro_test;
         end
+    disp([num2str(length(unique(gnd(labeledIdx)))),' ', num2str(length(unique(labeledIdx))),' ', num2str(length(labeledIdx))]);
     end
     disp(['Selecting ',num2str(k),' samples, ACC=',num2str(ACC_te(iSelIns)),', ROC=',num2str(ROC_te(iSelIns))]);
 end
 
-Method_name = 'FastDRAL_AEembedding'; %kmInit, mvInit, kmInit_embedding
+Method_name = 'FastDRAL_RandInit'; %kmInit, mvInit, kmInit_embedding
 result_writer(Method_name, dataset, 'Time', running_time);
 result_writer(Method_name, dataset, 'ACC_te', ACC_te);
 result_writer(Method_name, dataset, 'ROC_te', ROC_te);
